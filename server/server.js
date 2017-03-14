@@ -5,6 +5,7 @@ import passport from 'passport';
 import bodyParser from 'body-parser';
 import path from 'path';
 import IntlWrapper from '../client/modules/Intl/IntlWrapper';
+import cors from 'cors';
 
 // Webpack Requirements
 import webpack from 'webpack';
@@ -14,6 +15,8 @@ import webpackHotMiddleware from 'webpack-hot-middleware';
 
 // Initialize the Express App
 const app = new Express();
+
+app.use(cors());
 
 // Run Webpack dev server in development mode
 if (process.env.NODE_ENV === 'development') {
@@ -57,6 +60,7 @@ app.use(compression());
 app.use(bodyParser.json({ limit: '20mb' }));
 app.use(bodyParser.urlencoded({ limit: '20mb', extended: false }));
 app.use(Express.static(path.resolve(__dirname, '../dist')));
+app.use(Express.static(path.resolve(__dirname, '../public')));
 app.use('/api', api);
 app.use('/auth', auth);
 
